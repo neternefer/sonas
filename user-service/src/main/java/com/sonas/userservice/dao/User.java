@@ -25,6 +25,7 @@ public class User {
     private String password;
 
     @Column(name = "user_type")
+    @Enumerated
     private UserType userType;
 
     public User(String email, String password, UserType userType) {

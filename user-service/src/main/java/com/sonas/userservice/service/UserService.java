@@ -2,6 +2,7 @@ package com.sonas.userservice.service;
 
 import com.sonas.userservice.controller.dto.UserDTO;
 import com.sonas.userservice.dao.User;
+import com.sonas.userservice.enums.UserType;
 import com.sonas.userservice.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,13 +21,13 @@ public class UserService {
         User newUser = userRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with id: " + id + " not found!"));
         if (user.getEmail() != null ) {
-            user.setEmail(user.getEmail());
+            newUser.setEmail(user.getEmail());
         }
         if (user.getPassword() != null) {
-            user.setPassword(user.getPassword());
+            newUser.setPassword(user.getPassword());
         }
         if (user.getUserType() != null) {
-            user.setUserType(user.getUserType());
+            newUser.setUserType(UserType.valueOf(user.getUserType()));
         }
         return userRepository.save(newUser);
     }
@@ -34,7 +35,7 @@ public class UserService {
     public User create(UserDTO user) {
         User newUser = new User(user.getEmail(),
                                 user.getPassword(),
-                                user.getUserType()
+                                UserType.valueOf(user.getUserType())
         );
         return userRepository.save(newUser);
     }
