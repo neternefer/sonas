@@ -3,9 +3,9 @@
 ### Test Database
 
 ```
-   create database ironhackhomework5;
+   create database sonas;
    
-   use ironhackhomework5;
+   use sonas;
    
    CREATE USER 'ironhacker'@'localhost' IDENTIFIED BY '1r0nH@ck3r';
    
