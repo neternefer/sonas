@@ -24,8 +24,16 @@ public class Portfolio {
 
     private PortfolioType portfolioType;
 
+    private String aboutMe;
+
     public Portfolio(long userId, PortfolioType portfolioType) {
         this.userId = userId;
         this.portfolioType = portfolioType;
+    }
+
+    public Portfolio(long userId, PortfolioType portfolioType, String aboutMe) {
+        this.userId = userId;
+        this.portfolioType = portfolioType;
+        this.aboutMe = aboutMe;
     }
 }

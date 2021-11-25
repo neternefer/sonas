@@ -14,4 +14,6 @@ public class CvDTO {
     private long userId;
 
     private String cvType;
+
+    private String intro;
 }

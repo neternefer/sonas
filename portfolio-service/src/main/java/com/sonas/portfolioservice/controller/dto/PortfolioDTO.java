@@ -11,7 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PortfolioDTO {
 
-    private long userId; //change
+    private long userDetailId;
 
     private String portfolioType;
+
+    private String aboutMe;
 }

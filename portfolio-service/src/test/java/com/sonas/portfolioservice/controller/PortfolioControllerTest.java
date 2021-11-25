@@ -45,8 +45,8 @@ public class PortfolioControllerTest {
     @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        portfolio1 = new Portfolio(1, PortfolioType.DARK);
-        portfolio2 = new Portfolio(2, PortfolioType.LIGHT);
+        portfolio1 = new Portfolio(1, PortfolioType.DARK, "Once upon a time");
+        portfolio2 = new Portfolio(2, PortfolioType.LIGHT, "To be or not to be");
         portfolioRepository.saveAll(List.of(portfolio1, portfolio2));
     }
 
@@ -58,8 +58,8 @@ public class PortfolioControllerTest {
     @Test
     void getPortfolios() throws Exception {
         MvcResult result = mockMvc.perform(get("/api/portfolios")).andDo(print()).andExpect(status().isOk()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains(""));
-        assertTrue(result.getResponse().getContentAsString().contains(""));
+        assertTrue(result.getResponse().getContentAsString().contains("Once upon a time"));
+        assertTrue(result.getResponse().getContentAsString().contains("To be or not to be"));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class PortfolioControllerTest {
         MvcResult result = mockMvc.perform(
                 get("/api/portfolios/" + portfolio1.getPortfolioId())
         ).andDo(print()).andExpect(status().isOk()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains(""));
+        assertTrue(result.getResponse().getContentAsString().contains("Once upon a time"));
     }
 
     @Test
@@ -79,30 +79,23 @@ public class PortfolioControllerTest {
     }
 
     @Test
-    void getPortfolioByUser_portfolioNotFound() throws Exception {
-        mockMvc.perform(
-                        get("/api/portfolios/" + 0) //userId
-                ).andDo(print()).andExpect(status().isNotFound())
-                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException));
-    }
-
-    @Test
     void getPortfolioByUser_portfolioFound() throws Exception {
         mockMvc.perform(
-                        get("/api/portfolios/" + 0) //non-existent userId
+                        get("/api/portfolios/" + 0)
                 ).andDo(print()).andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }
 
     @Test
     void addPortfolio() throws Exception {
-        PortfolioDTO portfolioDTO = new PortfolioDTO(
-
-        );
+        int numberOfPortfolios = portfolioRepository.findAll().size();
+        PortfolioDTO portfolioDTO = new PortfolioDTO(3, PortfolioType.DARK.toString(), "Hakunamatata");
         String body = objectMapper.writeValueAsString(portfolioDTO);
         MvcResult result = mockMvc.perform(post("/api/portfolios/new").content(body)
                 .contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isCreated()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains(""));
+        int numberOfPortfoliosAfter = portfolioRepository.findAll().size();
+        assertEquals(numberOfPortfolios++, numberOfPortfoliosAfter);
+        assertTrue(result.getResponse().getContentAsString().contains("Hakunamatata"));
     }
 
     @Test

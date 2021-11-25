@@ -28,6 +28,11 @@ public class User {
     @Enumerated
     private UserType userType;
 
+    public User(String email, UserType userType) {
+        this.email = email;
+        this.userType = userType;
+    }
+
     public User(String email, String password, UserType userType) {
         this.email = email;
         this.password = password;

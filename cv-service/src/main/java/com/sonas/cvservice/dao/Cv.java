@@ -24,8 +24,16 @@ public class Cv {
 
     private CvType cvType;
 
+    private String intro;
+
     public Cv(long userId, CvType cvType) {
         this.userId = userId;
         this.cvType = cvType;
+    }
+
+    public Cv(long userId, CvType cvType, String intro) {
+        this.userId = userId;
+        this.cvType = cvType;
+        this.intro = intro;
     }
 }

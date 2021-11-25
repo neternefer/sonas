@@ -58,8 +58,8 @@ public class CvControllerTest {
     @Test
     void getCvs() throws Exception {
         MvcResult result = mockMvc.perform(get("/api/cvs")).andDo(print()).andExpect(status().isOk()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains(""));
-        assertTrue(result.getResponse().getContentAsString().contains(""));
+        assertTrue(result.getResponse().getContentAsString().contains("1"));
+        assertTrue(result.getResponse().getContentAsString().contains("2"));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class CvControllerTest {
         MvcResult result = mockMvc.perform(
                 get("/api/curriculums/" + cv1.getCvId())
         ).andDo(print()).andExpect(status().isOk()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains(""));
+        assertTrue(result.getResponse().getContentAsString().contains("1"));
     }
 
     @Test
@@ -81,39 +81,21 @@ public class CvControllerTest {
     @Test
     void getCvByUser_cvNotFound() throws Exception {
         mockMvc.perform(
-                        get("/api/curriculums/" + 0) //userId
-                ).andDo(print()).andExpect(status().isNotFound())
-                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException));
-    }
-
-    @Test
-    void getCvByUser_cvFound() throws Exception {
-        mockMvc.perform(
-                        get("/api/curriculums/" + 0) //non-existent userId
+                        get("/api/curriculums/" + 0)
                 ).andDo(print()).andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }
 
     @Test
     void addCv() throws Exception {
-        CvDTO cvDTO = new CvDTO(
-
-        );
+        int numberOfCvs = cvRepository.findAll().size();
+        CvDTO cvDTO = new CvDTO(3, CvType.SIMPLE.toString());
         String body = objectMapper.writeValueAsString(cvDTO);
         MvcResult result = mockMvc.perform(post("/api/curriculums/new").content(body)
                 .contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isCreated()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains(""));
-    }
-
-    @Test
-    void updateUser() throws Exception {
-        CvDTO cvDTO = new CvDTO(
-
-        );
-        String body = objectMapper.writeValueAsString(cvDTO);
-        MvcResult result = mockMvc.perform(put("/api/users/update/" + cv1.getCvId()).content(body)
-                .contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isNoContent()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains(""));
+        int numberOfCvsAfter = cvRepository.findAll().size();
+        assertTrue(result.getResponse().getContentAsString().contains("3"));
+        assertEquals(numberOfCvs++, numberOfCvsAfter);
     }
 
     @Test
