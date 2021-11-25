@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="careerjet-api-client">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/careerjet-api-client" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/careerjet-api-client/docs" />
+    </JAVADOC>
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/careerjet-api-client" recursive="false" />
+  </library>
+</component>
