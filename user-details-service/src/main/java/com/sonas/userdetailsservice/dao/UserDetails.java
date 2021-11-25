@@ -55,5 +55,23 @@ public class UserDetails {
 
     @Enumerated
     private Seniority seniority;
+
+    public UserDetails(long userId, String name, String lastName, Date dateOfBirth, long addressId,
+                       Education education, Social social, Technology technology, Experience experience,
+                       String hobby, String phone, JobTitle jobTitle, Seniority seniority) {
+        this.userId = userId;
+        this.name = name;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.addressId = addressId;
+        this.education = education;
+        this.social = social;
+        this.technology = technology;
+        this.experience = experience;
+        this.hobby = hobby;
+        this.phone = phone;
+        this.jobTitle = jobTitle;
+        this.seniority = seniority;
+    }
 }
 
