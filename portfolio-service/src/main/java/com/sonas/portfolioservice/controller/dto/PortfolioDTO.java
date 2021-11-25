@@ -10,4 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PortfolioDTO {
+
+    private long userId; //change
+
+    private String portfolioType;
 }
