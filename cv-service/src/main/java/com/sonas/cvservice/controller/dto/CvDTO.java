@@ -11,4 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CvDTO {
 
+    private long userId;
+
+    private String cvType;
 }

@@ -1,5 +1,6 @@
 package com.sonas.cvservice.dao;
 
+import com.sonas.cvservice.enums.CvType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,13 @@ public class Cv {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cv_id")
     private long cvId;
+
+    private long userId;
+
+    private CvType cvType;
+
+    public Cv(long userId, CvType cvType) {
+        this.userId = userId;
+        this.cvType = cvType;
+    }
 }
