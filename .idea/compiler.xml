@@ -9,8 +9,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="job-service" />
         <module name="cv-service" />
-        <module name="user-service" />
         <module name="gateway-service" />
+        <module name="user-service" />
         <module name="discovery-service" />
         <module name="portfolio-service" />
       </profile>
@@ -21,6 +21,7 @@
       <module name="gateway-service" target="17" />
       <module name="job-service" target="17" />
       <module name="portfolio-service" target="17" />
+      <module name="user-details-service" target="17" />
       <module name="user-service" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -31,6 +32,7 @@
       <module name="gateway-service" options="-parameters" />
       <module name="job-service" options="-parameters" />
       <module name="portfolio-service" options="-parameters" />
+      <module name="user-details-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
   </component>

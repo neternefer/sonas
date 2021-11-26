@@ -10,4 +10,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PortfolioDTO {
+
+    private long userDetailId;
+
+    private String portfolioType;
+
+    private String aboutMe;
 }

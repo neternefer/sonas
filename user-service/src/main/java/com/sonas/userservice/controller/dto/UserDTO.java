@@ -6,20 +6,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
 
+    @NotNull
     private String email;
 
+    @NotNull
     private String password;
 
-    private UserType userType;
-
-    public UserDTO(String email, UserType userType) {
-        this.email = email;
-        this.userType = userType;
-    }
+    @NotNull
+    private String userType;
 }

@@ -15,8 +15,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.server.ResponseStatusException;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -56,42 +57,60 @@ public class UserControllerTest {
     @Test
     void getUsers() throws Exception {
         MvcResult result = mockMvc.perform(get("/api/users")).andDo(print()).andExpect(status().isOk()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains(""));
-        assertTrue(result.getResponse().getContentAsString().contains(""));
+        assertTrue(result.getResponse().getContentAsString().contains("maryJane@gmail.com"));
+        assertTrue(result.getResponse().getContentAsString().contains("peterParker@gmail.com"));
     }
 
     @Test
-    void getUserById() throws Exception {
+    void getUserById_userFound() throws Exception {
         MvcResult result = mockMvc.perform(
                 get("/api/users/" + user1.getUserId())
         ).andDo(print()).andExpect(status().isOk()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains(""));
+        assertTrue(result.getResponse().getContentAsString().contains("maryJane@gmail.com"));
+    }
+
+    @Test
+    void getUserById_userNotFound() throws Exception {
+        mockMvc.perform(
+                get("/api/users/" + 0)
+        ).andDo(print()).andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException));
+
     }
 
     @Test
     void addUser() throws Exception {
-        UserDTO userDTO = new UserDTO();
+        UserDTO userDTO = new UserDTO(
+                "johnDoe@gmailcom",
+                "pass2",
+                "BASIC"
+        );
         String body = objectMapper.writeValueAsString(userDTO);
         MvcResult result = mockMvc.perform(post("/api/users/new").content(body)
                 .contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isCreated()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains(""));
+        assertTrue(result.getResponse().getContentAsString().contains("johnDoe@gmailcom"));
     }
 
     @Test
     void updateUser() throws Exception {
-        UserDTO userDTO = new UserDTO();
+        UserDTO userDTO = new UserDTO(
+                "maryJane@gmail.com",
+                "pass",
+                "PREMIUM"
+        );
         String body = objectMapper.writeValueAsString(userDTO);
         MvcResult result = mockMvc.perform(put("/api/users/update/" + user1.getUserId()).content(body)
-                .contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isCreated()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains(""));
+                .contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isNoContent()).andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains("PREMIUM"));
     }
 
     @Test
     void deleteUser() throws Exception {
-        UserDTO userDTO = new UserDTO();
-        String body = objectMapper.writeValueAsString(userDTO);
-        MvcResult result = mockMvc.perform(delete("/api/users/delete/" + user1.getUserId()).content(body)
-                .contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isCreated()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains(""));
+        int numberOfUsers = userRepository.findAll().size();
+        MvcResult result = mockMvc.perform(
+                delete("/api/users/delete/" + user1.getUserId())
+        ).andDo(print()).andExpect(status().isOk()).andReturn();
+        int numberOfUsersAfterDelete = userRepository.findAll().size();
+        assertEquals(--numberOfUsers, numberOfUsersAfterDelete);
     }
 }

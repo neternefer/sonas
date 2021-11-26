@@ -24,12 +24,23 @@ public class User {
 
     private String password;
 
+    private String name;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    private String username;
+
     @Column(name = "user_type")
+    @Enumerated
     private UserType userType;
 
-    public User(String email, String password, UserType userType) {
+    public User(String email, String password, String name, String lastName, String username, UserType userType) {
         this.email = email;
         this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+        this.username = username;
         this.userType = userType;
     }
 }
