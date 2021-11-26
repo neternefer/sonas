@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,20 +22,36 @@ public class Cv {
     @Column(name = "cv_id")
     private long cvId;
 
+    @Column(name = "user_id")
     private long userId;
 
+    @Column(name = "cv_type")
     private CvType cvType;
+
+    @Column(name = "dob")
+    private Date dateOfBirth; //optional
+
+    @Column(name = "address_id")
+    private long addressId;
+
+    @Column(name = "social_id")
+    private long socialId;
+
+    private String hobby;
+
+    @Column(name = "job_title")
+    private String jobTitle;
+
+    private String seniority;
 
     private String intro;
 
-    public Cv(long userId, CvType cvType) {
-        this.userId = userId;
-        this.cvType = cvType;
-    }
+    @OneToMany
+    private List<Education> education;
 
-    public Cv(long userId, CvType cvType, String intro) {
-        this.userId = userId;
-        this.cvType = cvType;
-        this.intro = intro;
-    }
+    @OneToMany
+    private List<Experience> experience;
+
+    @OneToMany
+    private List<Technology> technology;
 }
