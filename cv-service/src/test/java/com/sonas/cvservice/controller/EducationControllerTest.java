@@ -70,8 +70,8 @@ public class EducationControllerTest {
 
     @AfterEach
     public  void tearDown() {
-
         educationRepository.deleteAll();
+        cvRepository.deleteAll();
     }
 
     @Test

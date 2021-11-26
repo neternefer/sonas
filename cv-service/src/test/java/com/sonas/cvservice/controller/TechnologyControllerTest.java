@@ -69,6 +69,7 @@ public class TechnologyControllerTest {
     @AfterEach
     public  void tearDown() {
         technologyRepository.deleteAll();
+        cvRepository.deleteAll();
     }
 
     @Test

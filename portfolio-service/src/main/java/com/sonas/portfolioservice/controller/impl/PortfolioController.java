@@ -38,6 +38,13 @@ public class PortfolioController {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Portfolio with id: " + id + " not found!"));
     }
 
+    @PutMapping("/update/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Portfolio updatePortfolio(@PathVariable(name = "id") long id,
+                       @RequestBody PortfolioDTO portfolio) {
+        return portfolioService.update(id, portfolio);
+    }
+
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     public Portfolio addPortfolio(@RequestBody @Valid PortfolioDTO portfolioDTO) {

@@ -72,8 +72,8 @@ public class ExperienceControllerTest {
 
     @AfterEach
     public  void tearDown() {
-
         experienceRepository.deleteAll();
+        cvRepository.deleteAll();
     }
 
     @Test

@@ -23,4 +23,9 @@ public class MinTechnology {
 
     @Column(name = "portfolio_id")
     private long portfolioId;
+
+    public MinTechnology(String name, long portfolioId) {
+        this.name = name;
+        this.portfolioId = portfolioId;
+    }
 }
