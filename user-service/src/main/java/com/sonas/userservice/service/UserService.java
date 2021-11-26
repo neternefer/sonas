@@ -33,10 +33,7 @@ public class UserService {
     }
 
     public User create(UserDTO user) {
-        User newUser = new User(user.getEmail(),
-                                user.getPassword(),
-                                UserType.valueOf(user.getUserType(),
-                                        )
+        User newUser = new User(
         );
         return userRepository.save(newUser);
     }

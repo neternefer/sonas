@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class EducationService {
 
@@ -34,5 +36,13 @@ public class EducationService {
                                          edu.getDegree(),
                                          edu.getCvId());
         return educationRepository.save(newEdu);
+    }
+
+    public List<Education> getByCv(long cvId) {
+        List<Education> foundSchools = educationRepository.findByCvId(cvId);
+        if(foundSchools.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "School not found!");
+        }
+        return foundSchools;
     }
 }

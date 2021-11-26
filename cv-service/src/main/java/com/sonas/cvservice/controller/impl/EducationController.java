@@ -25,7 +25,7 @@ public class EducationController {
     @Autowired
     EducationRepository educationRepository;
 
-    @GetMapping
+    @GetMapping("/get")
     @ResponseStatus(HttpStatus.OK)
     public List<Education> getSchools() {
         return educationRepository.findAll();
@@ -36,6 +36,12 @@ public class EducationController {
     public Education getSchoolById(@PathVariable(name = "id") long id) {
         return educationRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "School with id: " + id + " not found!"));
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Education> getSchoolsByCv(@RequestParam(value="cvId")  long cvId) {
+        return educationService.getByCv(cvId);
     }
 
     @PutMapping("/update/{id}")

@@ -1,8 +1,6 @@
 package com.sonas.cvservice.controller.impl;
 
-import com.sonas.cvservice.controller.dto.CvDTO;
 import com.sonas.cvservice.controller.dto.ExperienceDTO;
-import com.sonas.cvservice.dao.Cv;
 import com.sonas.cvservice.dao.Experience;
 import com.sonas.cvservice.repository.ExperienceRepository;
 import com.sonas.cvservice.service.ExperienceService;
@@ -25,7 +23,7 @@ public class ExperienceController {
     @Autowired
     ExperienceRepository experienceRepository;
 
-    @GetMapping
+    @GetMapping("/get")
     @ResponseStatus(HttpStatus.OK)
     public List<Experience> getExp() {
         return experienceRepository.findAll();
@@ -36,6 +34,12 @@ public class ExperienceController {
     public Experience getExpById(@PathVariable(name = "id") long id) {
         return experienceRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Experience with id: " + id + " not found!"));
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Experience> getExpByCv(@RequestParam(value="cvId")  long cvId) {
+        return experienceService.getByCv(cvId);
     }
 
     @PutMapping("/update/{id}")

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class ExperienceService {
 
@@ -35,5 +37,13 @@ public class ExperienceService {
                                            exp.getDuties(),
                                            exp.getCvId());
         return experienceRepository.save(newExp);
+    }
+
+    public List<Experience> getByCv(long cvId) {
+        List<Experience> foundExp = experienceRepository.findByCvId(cvId);
+        if(foundExp.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Experience not found!");
+        }
+        return foundExp;
     }
 }

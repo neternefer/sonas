@@ -22,7 +22,7 @@ public class Experience {
 
     private String position;
 
-    private String company; //optional
+    private String company;
 
     @Column(name = "start_date")
     private LocalDate startDate;
