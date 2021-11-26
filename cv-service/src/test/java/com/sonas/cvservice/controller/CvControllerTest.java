@@ -100,13 +100,20 @@ public class CvControllerTest {
 
     @Test
     void updateCv() throws Exception {
-        CvDTO cvDTO = new CvDTO(
+        CvDTO cvDTO = new CvDTO(2L,
+                                      CvType.COLOR.toString(),
+                              1L,
+                               2L,
+                                "swimming, movies",
+                               "QA Specialist",
+                              "Mid",
+                                 "This book is a treatise on the theory of ethics, very popular during the Renaissance."
 
         );
         String body = objectMapper.writeValueAsString(cvDTO);
         MvcResult result = mockMvc.perform(put("/api/curriculums/update/" + cv1.getCvId()).content(body)
                 .contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isNoContent()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains(""));
+        assertTrue(result.getResponse().getContentAsString().contains("Mid"));
     }
 
     @Test
