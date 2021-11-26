@@ -9,7 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="job-service" />
         <module name="cv-service" />
-        <module name="user-details-service" />
         <module name="gateway-service" />
         <module name="user-service" />
         <module name="discovery-service" />

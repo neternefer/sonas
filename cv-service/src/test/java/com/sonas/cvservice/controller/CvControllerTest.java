@@ -45,8 +45,8 @@ public class CvControllerTest {
     @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        cv1 = new Cv(1, CvType.SIMPLE, "It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.");
-        cv2 = new Cv(2, CvType.COLOR, "This book is a treatise on the theory of ethics, very popular during the Renaissance.");
+        cv1 = new Cv(1L, CvType.SIMPLE, 2L, 1L, "books, running", "Team Leader", "Mid","It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.");
+        cv2 = new Cv(2L, CvType.COLOR, 1L, 2L, "swimming, movies", "QA Specialist", "Junior", "This book is a treatise on the theory of ethics, very popular during the Renaissance.");
         cvRepository.saveAll(List.of(cv1, cv2));
     }
 
@@ -57,9 +57,9 @@ public class CvControllerTest {
 
     @Test
     void getCvs() throws Exception {
-        MvcResult result = mockMvc.perform(get("/api/cvs")).andDo(print()).andExpect(status().isOk()).andReturn();
+        MvcResult result = mockMvc.perform(get("/api/curriculums")).andDo(print()).andExpect(status().isOk()).andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."));
-        assertTrue(result.getResponse().getContentAsString().contains("This book is a treatise on the theory of ethics, very popular during the Renaissance."));
+        assertTrue(result.getResponse().getContentAsString().contains("swimming"));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class CvControllerTest {
         MvcResult result = mockMvc.perform(
                 get("/api/curriculums/" + cv1.getCvId())
         ).andDo(print()).andExpect(status().isOk()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains("It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."));
+        assertTrue(result.getResponse().getContentAsString().contains("Team Leader"));
     }
 
     @Test
@@ -89,13 +89,24 @@ public class CvControllerTest {
     @Test
     void addCv() throws Exception {
         int numberOfCvs = cvRepository.findAll().size();
-        CvDTO cvDTO = new CvDTO(3, CvType.SIMPLE.toString(), "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat quis turpis at fermentum. Nulla convallis ullamcorper dolor, quis finibus dolor porta in.");
+        CvDTO cvDTO = new CvDTO(3, CvType.SIMPLE.toString(), 3L, 3L, "nothing really", "Web Developer", "Senior", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat quis turpis at fermentum. Nulla convallis ullamcorper dolor, quis finibus dolor porta in.");
         String body = objectMapper.writeValueAsString(cvDTO);
         MvcResult result = mockMvc.perform(post("/api/curriculums/new").content(body)
                 .contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isCreated()).andReturn();
         int numberOfCvsAfter = cvRepository.findAll().size();
-        assertTrue(result.getResponse().getContentAsString().contains("Lorem ipsum dolor sit amet"));
-        assertEquals(numberOfCvs++, numberOfCvsAfter);
+        assertTrue(result.getResponse().getContentAsString().contains("nothing really"));
+        assertEquals(++numberOfCvs, numberOfCvsAfter);
+    }
+
+    @Test
+    void updateCv() throws Exception {
+        CvDTO cvDTO = new CvDTO(
+
+        );
+        String body = objectMapper.writeValueAsString(cvDTO);
+        MvcResult result = mockMvc.perform(put("/api/curriculums/update/" + cv1.getCvId()).content(body)
+                .contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isNoContent()).andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains(""));
     }
 
     @Test

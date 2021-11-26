@@ -38,6 +38,13 @@ public class CvController {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cv with id: " + id + " not found!"));
     }
 
+    @PutMapping("/update/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Cv updateCv(@PathVariable(name = "id") long id,
+                           @RequestBody CvDTO cv) {
+        return cvService.update(id, cv);
+    }
+
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     public Cv addCv(@RequestBody @Valid CvDTO cv) {

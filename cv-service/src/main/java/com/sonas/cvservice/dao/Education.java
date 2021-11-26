@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -24,10 +24,10 @@ public class Education {
     private String schoolName;
 
     @Column(name = "start_date")
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date")
-    private Date endDate;
+    private LocalDate endDate;
 
     @Column(name = "study_field")
     private String fieldOfStudy;
@@ -36,4 +36,18 @@ public class Education {
 
     @Column(name = "cv_id")
     private long cvId;
+
+    public Education(String schoolName,
+                     LocalDate startDate,
+                     LocalDate endDate,
+                     String fieldOfStudy,
+                     String degree,
+                     long cvId) {
+        this.schoolName = schoolName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.fieldOfStudy = fieldOfStudy;
+        this.degree = degree;
+        this.cvId = cvId;
+    }
 }

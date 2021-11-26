@@ -35,7 +35,8 @@ public class UserService {
     public User create(UserDTO user) {
         User newUser = new User(user.getEmail(),
                                 user.getPassword(),
-                                UserType.valueOf(user.getUserType())
+                                UserType.valueOf(user.getUserType(),
+                                        )
         );
         return userRepository.save(newUser);
     }

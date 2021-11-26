@@ -23,4 +23,10 @@ public class Technology {
 
     @Column(name = "cv_id")
     private long cvId;
+
+    public Technology(String name,
+                      long cvId) {
+        this.name = name;
+        this.cvId = cvId;
+    }
 }

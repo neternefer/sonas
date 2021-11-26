@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -28,9 +27,6 @@ public class Cv {
     @Column(name = "cv_type")
     private CvType cvType;
 
-    @Column(name = "dob")
-    private Date dateOfBirth; //optional
-
     @Column(name = "address_id")
     private long addressId;
 
@@ -46,12 +42,54 @@ public class Cv {
 
     private String intro;
 
-    @OneToMany
+    @OneToMany(mappedBy = "cvId")
     private List<Education> education;
 
-    @OneToMany
+    @OneToMany(mappedBy = "cvId")
     private List<Experience> experience;
 
-    @OneToMany
+    @OneToMany(mappedBy = "cvId")
     private List<Technology> technology;
+
+    public Cv(long userId,
+              CvType cvType,
+              long addressId,
+              long socialId,
+              String hobby,
+              String jobTitle,
+              String seniority,
+              String intro) {
+        this.userId = userId;
+        this.cvType = cvType;
+        this.addressId = addressId;
+        this.socialId = socialId;
+        this.hobby = hobby;
+        this.jobTitle = jobTitle;
+        this.seniority = seniority;
+        this.intro = intro;
+    }
+
+    public Cv(long userId,
+              CvType cvType,
+              long addressId,
+              long socialId,
+              String hobby,
+              String jobTitle,
+              String seniority,
+              String intro,
+              List<Education> education,
+              List<Experience> experience,
+              List<Technology> technology) {
+        this.userId = userId;
+        this.cvType = cvType;
+        this.addressId = addressId;
+        this.socialId = socialId;
+        this.hobby = hobby;
+        this.jobTitle = jobTitle;
+        this.seniority = seniority;
+        this.intro = intro;
+        this.education = education;
+        this.experience = experience;
+        this.technology = technology;
+    }
 }
