@@ -26,5 +26,12 @@ public class Address {
 
     private String city;
 
-    private String Country;
+    private String country;
+
+    public Address(String street, String streetNumber, String city, String country) {
+        this.street = street;
+        this.streetNumber = streetNumber;
+        this.city = city;
+        this.country = country;
+    }
 }
