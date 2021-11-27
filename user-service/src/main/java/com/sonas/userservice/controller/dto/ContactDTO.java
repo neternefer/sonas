@@ -1,11 +1,11 @@
 package com.sonas.userservice.controller.dto;
 
+import com.sonas.userservice.dao.Address;
 import com.sonas.userservice.dao.Social;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.tomcat.jni.Address;
 
 import java.util.List;
 

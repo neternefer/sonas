@@ -35,12 +35,32 @@ public class User {
     @Enumerated
     private UserType userType;
 
-    public User(String email, String password, String name, String lastName, String username, UserType userType) {
+    @Column(name = "contact_id")
+    private long contactId;
+
+    public User(String email,
+                String password,
+                UserType userType,
+                long contactId) {
+        this.email = email;
+        this.password = password;
+        this.userType = userType;
+        this.contactId = contactId;
+    }
+
+    public User(String email,
+                String password,
+                String name,
+                String lastName,
+                String username,
+                UserType userType,
+                long contactId) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.lastName = lastName;
         this.username = username;
         this.userType = userType;
+        this.contactId = contactId;
     }
 }

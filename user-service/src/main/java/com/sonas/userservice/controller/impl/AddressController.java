@@ -25,7 +25,7 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @GetMapping
+    @GetMapping("/get")
     @ResponseStatus(HttpStatus.OK)
     public List<Address> getAddresses() {
         return addressRepository.findAll();
@@ -36,6 +36,12 @@ public class AddressController {
     public Address getAddressById(@PathVariable(name = "id") long id) {
         return addressRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Address with id: " + id + " not found!"));
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Address> getAddressesByContact(@RequestParam(value="contactId")  long contactId) {
+        return addressService.getByContact(contactId);
     }
 
     @PutMapping("/update/{id}")

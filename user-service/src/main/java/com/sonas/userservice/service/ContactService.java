@@ -1,7 +1,6 @@
 package com.sonas.userservice.service;
 
 import com.sonas.userservice.controller.dto.ContactDTO;
-import com.sonas.userservice.dao.Address;
 import com.sonas.userservice.dao.Contact;
 import com.sonas.userservice.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;

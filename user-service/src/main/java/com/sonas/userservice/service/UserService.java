@@ -30,6 +30,7 @@ public class UserService {
         foundUser.setLastName(user.getLastName());
         foundUser.setUsername(user.getUsername());
         foundUser.setUserType(UserType.valueOf(user.getUserType()));
+        foundUser.setContactId(user.getContactId());
         return userRepository.save(foundUser);
     }
 
@@ -39,7 +40,8 @@ public class UserService {
                                 user.getName(),
                                 user.getLastName(),
                                 user.getUsername(),
-                                UserType.valueOf(user.getUserType())
+                                UserType.valueOf(user.getUserType()),
+                                user.getContactId()
         );
         return userRepository.save(newUser);
     }

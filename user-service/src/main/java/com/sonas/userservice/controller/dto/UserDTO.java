@@ -26,4 +26,6 @@ public class UserDTO {
     private String username;
 
     private String userType;
+
+    private long contactId;
 }

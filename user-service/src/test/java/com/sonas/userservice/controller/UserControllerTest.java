@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -36,17 +38,20 @@ public class UserControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private User user1;
+
     private User user2;
+
     private User user3;
 
     @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        user1 = new User("maryJane@gmail.com", "pass", UserType.BASIC);
-        user2 = new User("peterParker@gmail.com", "pass1", UserType.PREMIUM);
+        user1 = new User("maryJane@gmail.com", "pass", "Mary",
+                "Jane", "maryJ",UserType.BASIC);
+        user2 = new User("peterParker@gmail.com", "pass1", "Peter", "Parker",
+                "peterP", UserType.PREMIUM);
         user3 = new User("admin@gmail.com", "admin", UserType.ADMIN);
-        userRepository.save(user1);
-        userRepository.save(user2);
+        userRepository.saveAll(List.of(user1, user2, user3));
     }
 
     @AfterEach
@@ -75,15 +80,32 @@ public class UserControllerTest {
                 get("/api/users/" + 0)
         ).andDo(print()).andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException));
+    }
 
+    @Test
+    void getUserByType_userFound() throws Exception {
+        MvcResult result = mockMvc.perform(
+                get("/api/users?userType=" + user1.getUserType())
+        ).andDo(print()).andExpect(status().isOk()).andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains("maryJane@gmail.com"));
+    }
+
+    @Test
+    void getUserByType_userNotFound() throws Exception {
+        mockMvc.perform(
+                        get("/api/users?userType=" + "GOLD")
+                ).andDo(print()).andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }
 
     @Test
     void addUser() throws Exception {
-        UserDTO userDTO = new UserDTO(
-                "johnDoe@gmailcom",
-                "pass2",
-                "BASIC"
+        UserDTO userDTO = new UserDTO("johnDoe@gmailcom",
+                                      "pass2",
+                                      "John",
+                                      "Doe",
+                                      "johnD",
+                                      "BASIC"
         );
         String body = objectMapper.writeValueAsString(userDTO);
         MvcResult result = mockMvc.perform(post("/api/users/new").content(body)
@@ -93,10 +115,12 @@ public class UserControllerTest {
 
     @Test
     void updateUser() throws Exception {
-        UserDTO userDTO = new UserDTO(
-                "maryJane@gmail.com",
-                "pass",
-                "PREMIUM"
+        UserDTO userDTO = new UserDTO("maryJane@gmail.com",
+                                      "pass",
+                                      "Mary",
+                                      "Jane",
+                                      "maryJ",
+                                      "PREMIUM"
         );
         String body = objectMapper.writeValueAsString(userDTO);
         MvcResult result = mockMvc.perform(put("/api/users/update/" + user1.getUserId()).content(body)

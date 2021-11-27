@@ -28,10 +28,18 @@ public class Address {
 
     private String country;
 
-    public Address(String street, String streetNumber, String city, String country) {
+    @Column(name = "contact_id")
+    private long contactId;
+
+    public Address(String street,
+                   String streetNumber,
+                   String city,
+                   String country,
+                   long contactId) {
         this.street = street;
         this.streetNumber = streetNumber;
         this.city = city;
         this.country = country;
+        this.contactId = contactId;
     }
 }
