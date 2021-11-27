@@ -2,8 +2,14 @@ package com.sonas.userservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sonas.userservice.controller.dto.UserDTO;
+import com.sonas.userservice.dao.Address;
+import com.sonas.userservice.dao.Contact;
+import com.sonas.userservice.dao.Social;
 import com.sonas.userservice.dao.User;
 import com.sonas.userservice.enums.UserType;
+import com.sonas.userservice.repository.AddressRepository;
+import com.sonas.userservice.repository.ContactRepository;
+import com.sonas.userservice.repository.SocialRepository;
 import com.sonas.userservice.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +23,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,6 +40,15 @@ public class UserControllerTest {
     UserRepository userRepository;
 
     @Autowired
+    AddressRepository addressRepository;
+
+    @Autowired
+    SocialRepository socialRepository;
+
+    @Autowired
+    ContactRepository contactRepository;
+
+    @Autowired
     private WebApplicationContext webApplicationContext;
 
     private MockMvc mockMvc;
@@ -43,20 +61,55 @@ public class UserControllerTest {
 
     private User user3;
 
+    private Address address;
+
+    private Address address1;
+
+    private Social social;
+
+    private List<Address> addresses = new ArrayList<>();
+
+    private List<Social> socialLinks = new ArrayList<>();
+
+    private Contact contact;
+
+    private Contact contact1;
+
+    private Contact contact2;
+
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws MalformedURLException {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        contact = new Contact("111222333");
+        contact1 = new Contact("999888777");
+        contact2 = new Contact("333333333");
+        contactRepository.save(contact);
+        address = new Address("Baker Str.", "11", "London",
+                "United Kingdom", contact.getContactId());
+        address1 = new Address("Maretta", "56", "Madrid",
+                "Spain", contact.getContactId());
+        addresses.addAll(List.of(address, address1));
+        social = new Social("Facebook", new URL("https://www.facebook.com/Test/"),
+                contact.getContactId());
+        socialLinks.add(social);
+        contact.setAddress(addresses);
+        contact1.setSocial(socialLinks);
+        contactRepository.saveAll(List.of(contact, contact1, contact2));
+        addressRepository.saveAll(List.of(address, address1));
+        socialRepository.save(social);
         user1 = new User("maryJane@gmail.com", "pass", "Mary",
-                "Jane", "maryJ",UserType.BASIC);
+                "Jane", "maryJ",UserType.BASIC, contact.getContactId());
         user2 = new User("peterParker@gmail.com", "pass1", "Peter", "Parker",
-                "peterP", UserType.PREMIUM);
+                "peterP", UserType.PREMIUM, contact1.getContactId());
         user3 = new User("admin@gmail.com", "admin", UserType.ADMIN);
         userRepository.saveAll(List.of(user1, user2, user3));
     }
 
     @AfterEach
     public  void tearDown() {
-        userRepository.deleteAll();
+        addressRepository.deleteAll();
+        socialRepository.deleteAll();
+        contactRepository.deleteAll();
     }
 
     @Test
@@ -105,7 +158,8 @@ public class UserControllerTest {
                                       "John",
                                       "Doe",
                                       "johnD",
-                                      "BASIC"
+                                      "BASIC",
+                                              contact2.getContactId()
         );
         String body = objectMapper.writeValueAsString(userDTO);
         MvcResult result = mockMvc.perform(post("/api/users/new").content(body)
@@ -120,7 +174,8 @@ public class UserControllerTest {
                                       "Mary",
                                       "Jane",
                                       "maryJ",
-                                      "PREMIUM"
+                                      "PREMIUM",
+                                              contact.getContactId()
         );
         String body = objectMapper.writeValueAsString(userDTO);
         MvcResult result = mockMvc.perform(put("/api/users/update/" + user1.getUserId()).content(body)

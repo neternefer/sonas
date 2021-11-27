@@ -40,12 +40,10 @@ public class User {
 
     public User(String email,
                 String password,
-                UserType userType,
-                long contactId) {
+                UserType userType) {
         this.email = email;
         this.password = password;
         this.userType = userType;
-        this.contactId = contactId;
     }
 
     public User(String email,

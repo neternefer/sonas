@@ -48,11 +48,7 @@ public class AddressControllerTest {
 
     private Address address1;
 
-    private Social social;
-
     private List<Address> addresses = new ArrayList<>();
-
-    private List<Social> socialLinks = new ArrayList<>();
 
     private Contact contact;
 

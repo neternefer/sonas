@@ -1,12 +1,9 @@
 package com.sonas.userservice.controller.impl;
 
-import com.sonas.userservice.controller.dto.ContactDTO;
 import com.sonas.userservice.controller.dto.SocialDTO;
-import com.sonas.userservice.dao.Contact;
+import com.sonas.userservice.dao.Address;
 import com.sonas.userservice.dao.Social;
-import com.sonas.userservice.repository.ContactRepository;
 import com.sonas.userservice.repository.SocialRepository;
-import com.sonas.userservice.service.ContactService;
 import com.sonas.userservice.service.SocialService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +27,7 @@ public class SocialController {
         this.socialService = socialService;
     }
 
-    @GetMapping
+    @GetMapping("/get")
     @ResponseStatus(HttpStatus.OK)
     public List<Social> getSocials() {
         return socialRepository.findAll();
@@ -41,6 +38,12 @@ public class SocialController {
     public Social getSocialById(@PathVariable(name = "id") long id) {
         return socialRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Social links with id: " + id + " not found!"));
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Social> getSocialLinksByContact(@RequestParam(value="contactId")  long contactId) {
+        return socialService.getByContact(contactId);
     }
 
     @PutMapping("/update/{id}")

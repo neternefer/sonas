@@ -1,6 +1,7 @@
 package com.sonas.userservice.service;
 
 import com.sonas.userservice.controller.dto.SocialDTO;
+import com.sonas.userservice.dao.Address;
 import com.sonas.userservice.dao.Contact;
 import com.sonas.userservice.dao.Social;
 import com.sonas.userservice.repository.SocialRepository;
@@ -11,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 @Service
 public class SocialService {
@@ -32,5 +34,13 @@ public class SocialService {
                                       new URL(social.getLink()),
                                       social.getContactId());
         return socialRepository.save(newSocial);
+    }
+
+    public List<Social> getByContact(long contactId) {
+        List<Social> foundSocial = socialRepository.findByContactId(contactId);
+        if(foundSocial.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Social links not found!");
+        }
+        return foundSocial;
     }
 }

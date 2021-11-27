@@ -20,4 +20,8 @@ public class ContactDTO {
     private List<Social> social;
 
     private List<Address> address;
+
+    public ContactDTO(String phone) {
+        this.phone = phone;
+    }
 }
