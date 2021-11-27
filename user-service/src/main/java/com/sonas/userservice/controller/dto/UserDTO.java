@@ -1,6 +1,5 @@
 package com.sonas.userservice.controller.dto;
 
-import com.sonas.userservice.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +19,11 @@ public class UserDTO {
     @NotNull
     private String password;
 
-    @NotNull
+    private String name;
+
+    private String lastName;
+
+    private String username;
+
     private String userType;
 }

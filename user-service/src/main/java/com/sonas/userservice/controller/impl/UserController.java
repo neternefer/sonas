@@ -3,6 +3,7 @@ package com.sonas.userservice.controller.impl;
 import com.sonas.userservice.controller.dto.UserDTO;
 import com.sonas.userservice.controller.interf.IUserController;
 import com.sonas.userservice.dao.User;
+import com.sonas.userservice.enums.UserType;
 import com.sonas.userservice.repository.UserRepository;
 import com.sonas.userservice.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class UserController implements IUserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping
+    @GetMapping("/get")
     @ResponseStatus(HttpStatus.OK)
     public List<User> getUsers() {
         return userRepository.findAll();
@@ -38,6 +39,12 @@ public class UserController implements IUserController {
     public User getUserById(@PathVariable(name = "id") long id) {
         return userRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with id: " + id + " not found!"));
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<User> getUserByType(@RequestParam(value="userType") UserType userType) {
+        return userService.getByType(userType);
     }
 
     @PutMapping("/update/{id}")
