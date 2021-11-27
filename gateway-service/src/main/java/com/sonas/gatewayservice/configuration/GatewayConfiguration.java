@@ -4,6 +4,7 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.web.authentication.AuthenticationFilter;
 
 @Configuration
 public class GatewayConfiguration {
@@ -16,6 +17,7 @@ public class GatewayConfiguration {
                 .route(p -> p.path("/api/users**")
                         .uri("lb://USER-SERVICE"))
                 .route(p -> p.path("/api/curriculums/**")
+                        .filters(f -> f.filter(new AuthenticationFilter().apply()))
                         .uri("lb://CV-SERVICE"))
                 .route(p -> p.path("/api/curriculums**")
                         .uri("lb://CV-SERVICE"))
