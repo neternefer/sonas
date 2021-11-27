@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -26,5 +27,20 @@ public class Address {
 
     private String city;
 
-    private String Country;
+    private String country;
+
+    @Column(name = "contact_id")
+    private long contactId;
+
+    public Address(String street,
+                   String streetNumber,
+                   String city,
+                   String country,
+                   long contactId) {
+        this.street = street;
+        this.streetNumber = streetNumber;
+        this.city = city;
+        this.country = country;
+        this.contactId = contactId;
+    }
 }

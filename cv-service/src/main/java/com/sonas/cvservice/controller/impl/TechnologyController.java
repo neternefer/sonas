@@ -1,6 +1,7 @@
 package com.sonas.cvservice.controller.impl;
 
 import com.sonas.cvservice.controller.dto.TechnologyDTO;
+import com.sonas.cvservice.dao.Experience;
 import com.sonas.cvservice.dao.Technology;
 import com.sonas.cvservice.repository.TechnologyRepository;
 import com.sonas.cvservice.service.TechnologyService;
@@ -26,7 +27,7 @@ public class TechnologyController {
         this.technologyService = technologyService;
     }
 
-    @GetMapping
+    @GetMapping("/get")
     @ResponseStatus(HttpStatus.OK)
     public List<Technology> getTech() {
         return technologyRepository.findAll();
@@ -37,6 +38,12 @@ public class TechnologyController {
     public Technology getTechById(@PathVariable(name = "id") long id) {
         return technologyRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Technology with id: " + id + " not found!"));
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Technology> getTechByCv(@RequestParam(value="cvId")  long cvId) {
+        return technologyService.getByCv(cvId);
     }
 
     @PutMapping("/update/{id}")

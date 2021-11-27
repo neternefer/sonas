@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.net.URL;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,20 +22,40 @@ public class Portfolio {
     @Column(name = "portfolio_id")
     private long portfolioId;
 
-    private long userId; //change to userDetails
+    private long userId;
 
+    @Column(name = "portfolio_type")
     private PortfolioType portfolioType;
 
+    @Column(name = "photo_name")
+    private String photoName;
+
+    @Column(name = "about_me")
     private String aboutMe;
 
-    public Portfolio(long userId, PortfolioType portfolioType) {
+    @Column(name = "min_tech")
+    @OneToMany(mappedBy = "portfolioId")
+    private List<MinTechnology> minTech;
+
+    public Portfolio(long userId,
+                     PortfolioType portfolioType,
+                     String photoName,
+                     String aboutMe,
+                     List<MinTechnology> minTech) {
         this.userId = userId;
         this.portfolioType = portfolioType;
+        this.photoName = photoName;
+        this.aboutMe = aboutMe;
+        this.minTech = minTech;
     }
 
-    public Portfolio(long userId, PortfolioType portfolioType, String aboutMe) {
+    public Portfolio(long userId,
+                     PortfolioType portfolioType,
+                     String photoName,
+                     String aboutMe) {
         this.userId = userId;
         this.portfolioType = portfolioType;
+        this.photoName = photoName;
         this.aboutMe = aboutMe;
     }
 }
