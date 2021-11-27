@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sonas.userservice.controller.dto.AddressDTO;
 import com.sonas.userservice.dao.Address;
 import com.sonas.userservice.dao.Contact;
-import com.sonas.userservice.dao.Social;
 import com.sonas.userservice.repository.AddressRepository;
 import com.sonas.userservice.repository.ContactRepository;
 import org.junit.jupiter.api.AfterEach;

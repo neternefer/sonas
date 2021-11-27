@@ -22,10 +22,10 @@ public class Contact {
 
     private String phone;
 
-    @OneToMany
+    @OneToMany(mappedBy = "contactId")
     private List<Social> social;
 
-    @OneToMany
+    @OneToMany(mappedBy = "contactId")
     private List<Address> address;
 
     public Contact(String phone, List<Social> social, List<Address> address) {

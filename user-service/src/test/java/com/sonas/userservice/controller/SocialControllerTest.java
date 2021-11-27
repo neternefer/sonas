@@ -124,7 +124,7 @@ public class SocialControllerTest {
         MvcResult result = mockMvc.perform(
                 get("/api/users/social?contactId=" + contact.getContactId())
         ).andDo(print()).andExpect(status().isOk()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains("faceboook"));
+        assertTrue(result.getResponse().getContentAsString().contains("Facebook"));
     }
 
     @Test

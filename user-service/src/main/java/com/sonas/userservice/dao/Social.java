@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.net.URL;
@@ -24,6 +26,7 @@ public class Social {
 
     private URL link;
 
+    @Column(name = "contact_id")
     private long contactId;
 
     public Social(String linkType, URL link, long contactId) {

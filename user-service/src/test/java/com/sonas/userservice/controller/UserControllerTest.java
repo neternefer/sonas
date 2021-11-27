@@ -114,7 +114,7 @@ public class UserControllerTest {
 
     @Test
     void getUsers() throws Exception {
-        MvcResult result = mockMvc.perform(get("/api/users")).andDo(print()).andExpect(status().isOk()).andReturn();
+        MvcResult result = mockMvc.perform(get("/api/users/get")).andDo(print()).andExpect(status().isOk()).andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("maryJane@gmail.com"));
         assertTrue(result.getResponse().getContentAsString().contains("peterParker@gmail.com"));
     }
@@ -146,7 +146,7 @@ public class UserControllerTest {
     @Test
     void getUserByType_userNotFound() throws Exception {
         mockMvc.perform(
-                        get("/api/users?userType=" + "GOLD")
+                        get("/api/users?userType=" + UserType.valueOf("GOLD"))
                 ).andDo(print()).andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResponseStatusException));
     }

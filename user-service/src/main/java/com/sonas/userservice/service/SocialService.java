@@ -25,7 +25,7 @@ public class SocialService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Social links with id: " + id + " not found!"));
         foundSocial.setLinkType(social.getLinkType());
         foundSocial.setLink(new URL(social.getLink()));
-        foundSocial.setSocialId(social.getContactId());
+        foundSocial.setContactId(social.getContactId());
         return socialRepository.save(foundSocial);
     }
 

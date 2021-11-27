@@ -1,7 +1,6 @@
 package com.sonas.userservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sonas.userservice.controller.dto.AddressDTO;
 import com.sonas.userservice.controller.dto.ContactDTO;
 import com.sonas.userservice.dao.Address;
 import com.sonas.userservice.dao.Contact;
@@ -82,7 +81,7 @@ public class ContactControllerTest {
         socialLinks.add(social);
         contact.setAddress(addresses);
         contact1.setSocial(socialLinks);
-        contactRepository.save(contact);
+        contactRepository.saveAll(List.of(contact, contact1));
         addressRepository.saveAll(List.of(address, address1));
         socialRepository.save(social);
     }
@@ -146,7 +145,7 @@ public class ContactControllerTest {
         MvcResult result = mockMvc.perform(
                 delete("/api/users/contact/delete/" + contact.getContactId())
         ).andDo(print()).andExpect(status().isOk()).andReturn();
-        int numberOfContactsAfterDelete = addressRepository.findAll().size();
+        int numberOfContactsAfterDelete =contactRepository.findAll().size();
         assertEquals(--numberOfContacts, numberOfContactsAfterDelete);
     }
 }
