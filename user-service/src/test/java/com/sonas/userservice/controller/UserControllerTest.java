@@ -101,8 +101,7 @@ public class UserControllerTest {
                 "Jane", "maryJ",UserType.BASIC, contact.getContactId());
         user2 = new User("peterParker@gmail.com", "pass1", "Peter", "Parker",
                 "peterP", UserType.PREMIUM, contact1.getContactId());
-        user3 = new User("admin@gmail.com", "admin", UserType.ADMIN);
-        userRepository.saveAll(List.of(user1, user2, user3));
+        userRepository.saveAll(List.of(user1, user2));
     }
 
     @AfterEach
