@@ -17,7 +17,6 @@ public class GatewayConfiguration {
                 .route(p -> p.path("/api/users**")
                         .uri("lb://USER-SERVICE"))
                 .route(p -> p.path("/api/curriculums/**")
-                        .filters(f -> f.filter(new AuthenticationFilter().apply()))
                         .uri("lb://CV-SERVICE"))
                 .route(p -> p.path("/api/curriculums**")
                         .uri("lb://CV-SERVICE"))
