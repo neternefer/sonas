@@ -18,6 +18,7 @@
 | Port | Service
 | :--- | :--- 
 | 8761 | discovery-service
+| 8099 | auth-service
 | 8000 | gateway-service
 | 8100 | user-service
 | 8200 | cv-service
