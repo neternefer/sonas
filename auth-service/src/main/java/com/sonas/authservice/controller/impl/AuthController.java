@@ -28,6 +28,13 @@ public class AuthController {
     @Autowired
     private JwtUtils jwtUtils;
 
+    public AuthController(AuthenticationManager authenticationManager, MyUserDetailsService myUserDetailsService, JwtUtils jwtUtils) {
+        this.authenticationManager = authenticationManager;
+        this.myUserDetailsService = myUserDetailsService;
+        this.jwtUtils = jwtUtils;
+    }
+
+
     @PostMapping("/api/auth/login")
     public ResponseEntity<?> login(@RequestBody UserDTO userDTO) throws Exception {
 

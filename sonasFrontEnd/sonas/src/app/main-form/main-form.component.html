@@ -1,1 +1,125 @@
-<p>main-form works!</p>
+<!-- <form [formGroup]="fullForm">
+    
+        <label for="name">First name: </label>
+        <input class="form-control form-control-lg" id="name" type="text" formControlName="name">
+    
+        <label for="lastName">Last name: </label>
+        <input class="form-control form-control-lg" id="lastName" type="text" formControlName="lastName">
+    
+        <button class="btn btn-secondary" type="submit" [disabled]="!personalForm.valid">Submit</button>
+</form> -->
+<form [formGroup]="user" (ngSubmit)="onSubmit()">
+    <h2>Personal Information</h2>
+    <label for="name">First name: </label>
+    <input class="form-control form-control-lg" id="name" type="text" formControlName="name">
+    <label for="lastName">Last name: </label>
+    <input class="form-control form-control-lg" id="lastName" type="text" formControlName="lastName">
+    <label for="email">Email:</label> 
+    <input class="form-control form-control-lg" id="email" type="text" formControlName="email">
+    <label for="username">Username: </label>
+    <input class="form-control form-control-lg" id="username" type="text" formControlName="username">
+    <label for="password">Password: </label>
+    <input class="form-control form-control-lg" id="password" type="text" formControlName="password">
+    <label for="userType">UserType: </label>
+    <select formControlName="userType">
+        <option value="" disabled>Choose User Type</option>
+        <option *ngFor="let userType of userTypeList" [ngValue]="userType" (change)="changeUserType($event)">{{userType}}</option>
+    </select>
+    <form [formGroup]="contact" (ngSubmit)="onSubmit()">
+        <h2>Contact</h2>
+        <label for="phone">Phone: </label>
+        <input class="form-control form-control-lg" id="phone" type="text" formControlName="phone">
+            <form [formGroup]="social" (ngSubmit)="onSubmit()">
+                <label for="social">Social: </label>
+                <select multiple formControlName="socialLink">
+                    <option value="" disabled>Choose social links</option>
+                    <option *ngFor="let social of socialList" [ngValue]="social" (change)="changeSocial($event)">{{social}}</option>
+                </select>
+                <button class="btn btn-secondary" type="submit" [disabled]="!social.valid">Add Social Links</button>
+            </form>
+    <form [formGroup]="address" (ngSubmit)="onSubmit()">
+        <h2>Address</h2>
+        <label for="street">Street: </label>
+        <input class="form-control form-control-lg" id="street" type="text" formControlName="street">
+        <label for="city">City: </label>
+        <input class="form-control form-control-lg" id="city" type="text" formControlName="city">
+        <label for="state">State: </label>
+        <input class="form-control form-control-lg" id="state" type="text" formControlName="state">
+        <label for="zip">Zip Code: </label>
+        <input class="form-control form-control-lg" id="zip" type="text" formControlName="zip">
+        <label for="country">Country: </label>
+        <select formControlName="countryName" >
+            <option value="" disabled>Choose country: </option>
+            <option class="form-control form-control-lg" *ngFor="let country of countries" [ngValue]="country" (click)="selectCountry(country)">{{country.name}}</option>
+        </select>
+        <button class="btn btn-secondary" type="submit" [disabled]="!address.valid">Add Address</button>
+    </form>
+    <button class="btn btn-secondary" type="submit" [disabled]="!contact.valid">Save Contact</button>
+    </form>
+    <button class="btn btn-secondary" type="submit" [disabled]="!user.valid">Save User Details</button>
+</form> 
+<!-- <form [formGroup]="education" (ngSubmit)="onSubmit()">
+    <h2>Education</h2>
+    <label for="school">School: </label>
+    <input class="form-control form-control-lg" id="school" type="text" formControlName="schoolName">
+    <mat-form-field class="date start" formControlName="schoolStart" appearance="fill">
+        <mat-label>Start date</mat-label>
+        <input id="start" matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    <mat-form-field class="date ed" formControlName="schoolEnd"appearance="fill">
+        <mat-label>End date</mat-label>
+        <input id="end" matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <label for="study">Field of Study: </label>
+    <input class="form-control form-control-lg" id="study" type="text" formControlName="studyField">
+    <label for="social">Degree: </label>
+    <select formControlName="lastDegree">
+        <option value="" disabled>Choose most recent degree</option>
+        <option *ngFor="let degree of degreeList" [ngValue]="degree" (change)="changeDegree($event)">{{degree}}</option>
+     </select>
+    <button class="btn btn-secondary" type="submit" [disabled]="!education.valid">Submit</button>
+</form>
+<form [formGroup]="experience" (ngSubmit)="onSubmit()">
+    <h2>Experience</h2>
+    <label for="position">Position: </label>
+    <input class="form-control form-control-lg" id="position" type="text" formControlName="position">
+    <label for="company">Company: </label>
+    <input class="form-control form-control-lg" id="company" type="text" formControlName="company">
+    <mat-form-field class="date start" formControlName="jobStart" appearance="fill">
+        <mat-label>Start date</mat-label>
+        <input id="start" matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    <mat-form-field class="date ed" formControlName="jobEnd"appearance="fill">
+        <mat-label>End date</mat-label>
+        <input id="end" matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <label for="duties">Duties: </label>
+    <textarea id="duties" type="text" formControlName="duties" name="duties" cols="30" rows="10"></textarea>
+    <button class="btn btn-secondary" type="submit" [disabled]="!education.valid">Submit</button>
+</form>
+<form [formGroup]="technology" (ngSubmit)="onSubmit()">
+    <div *ngFor="let technology of technologyList; let i=index">
+        <label>
+          <input type="checkbox" [value]="technology.value" (change)="onCheckboxChange($event)" />
+          {{technology.name}}
+        </label>
+      </div>
+    <button class="btn btn-secondary" type="submit" [disabled]="!technology.valid">Submit</button>
+</form> -->
+ 
