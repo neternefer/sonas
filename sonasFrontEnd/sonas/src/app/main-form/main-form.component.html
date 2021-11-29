@@ -1,1 +1,40 @@
-<p>main-form works!</p>
+<div [formGroup]="personalForm">
+    <form class="form-group" formGroupName="personal">
+        <h2>Address</h2>
+    
+        <label for="name">First name: </label>
+        <input class="form-control form-control-lg" id="name" type="text" formControlName="name">
+    
+        <label for="lastName">Last name: </label>
+        <input class="form-control form-control-lg" id="lastName" type="text" formControlName="lastName">
+    
+        <label for="phone">Phone: </label>
+        <input class="form-control form-control-lg" id="phone" type="text" formControlName="phone">
+    
+        <label for="email">Email: </label>
+        <input class="form-control form-control-lg" id="email" type="text" formControlName="email">
+
+        <p>Complete the form to enable button.</p>
+        <button class="btn btn-secondary" type="submit" [disabled]="!personalForm.valid">Submit</button>
+    </form>
+</div>
+<div [formGroup]="addressForm">
+    <form class="form-group" formGroupName="address">
+        <h2>Address</h2>
+    
+        <label for="street">Street: </label>
+        <input class="form-control form-control-lg" id="street" type="text" formControlName="street">
+    
+        <label for="city">City: </label>
+        <input class="form-control form-control-lg" id="city" type="text" formControlName="city">
+    
+        <label for="state">State: </label>
+        <input class="form-control form-control-lg" id="state" type="text" formControlName="state">
+    
+        <label for="zip">Zip Code: </label>
+        <input class="form-control form-control-lg" id="zip" type="text" formControlName="zip">
+
+        <p>Complete the form to enable button.</p>
+        <button class="btn btn-secondary" type="submit" [disabled]="!addressForm.valid">Submit</button>
+    </form>
+</div>
