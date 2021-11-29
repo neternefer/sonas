@@ -1,6 +1,4 @@
-<div [formGroup]="personalForm">
-    <form class="form-group" formGroupName="personal">
-        <h2>Address</h2>
+<!-- <form [formGroup]="fullForm">
     
         <label for="name">First name: </label>
         <input class="form-control form-control-lg" id="name" type="text" formControlName="name">
@@ -8,18 +6,9 @@
         <label for="lastName">Last name: </label>
         <input class="form-control form-control-lg" id="lastName" type="text" formControlName="lastName">
     
-        <label for="phone">Phone: </label>
-        <input class="form-control form-control-lg" id="phone" type="text" formControlName="phone">
-    
-        <label for="email">Email: </label>
-        <input class="form-control form-control-lg" id="email" type="text" formControlName="email">
-
-        <p>Complete the form to enable button.</p>
         <button class="btn btn-secondary" type="submit" [disabled]="!personalForm.valid">Submit</button>
-    </form>
-</div>
-<div [formGroup]="addressForm">
-    <form class="form-group" formGroupName="address">
+</form> -->
+<form [formGroup]="address" (ngSubmit)="onSubmit()">
         <h2>Address</h2>
     
         <label for="street">Street: </label>
@@ -35,6 +24,28 @@
         <input class="form-control form-control-lg" id="zip" type="text" formControlName="zip">
 
         <p>Complete the form to enable button.</p>
-        <button class="btn btn-secondary" type="submit" [disabled]="!addressForm.valid">Submit</button>
-    </form>
-</div>
+        <button class="btn btn-secondary" type="submit" [disabled]="!address.valid">Submit</button>
+</form>
+<form [formGroup]="contact" (ngSubmit)="onSubmit()">
+    <h2>Contact</h2>
+    <label for="phone">Phone: </label>
+    <input class="form-control form-control-lg" id="phone" type="text" formControlName="phone">
+    <label for="social">Social: </label>
+    <select multiple formControlName="socialLink">
+        <option value="" disabled>Choose social links</option>
+        <option *ngFor="let social of Social" [ngValue]="social" (change)="changeSocial($event)">{{social}}</option>
+     </select>
+    <button class="btn btn-secondary" type="submit" [disabled]="!contact.valid">Submit</button>
+</form>
+<form [formGroup]="education" (ngSubmit)="onSubmit()">
+    <h2>Education</h2>
+    <label for="school">School: </label>
+    <input class="form-control form-control-lg" id="school" type="text" formControlName="schoolName">
+    <label for="startDate">StartDate: </label>
+    <select multiple formControlName="socialLink">
+        <option value="" disabled>Choose social links</option>
+        <option *ngFor="let social of Social" [ngValue]="social" (change)="changeSocial($event)">{{social}}</option>
+     </select>
+    <button class="btn btn-secondary" type="submit" [disabled]="!contact.valid">Submit</button>
+</form>
+
